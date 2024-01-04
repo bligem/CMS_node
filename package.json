@@ -1,0 +1,31 @@
+{
+  "name": "cms_node",
+  "version": "1.0.0",
+  "description": "CMS BLOG",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bligem/CMS_node.git"
+  },
+  "keywords": [
+    "CMS",
+    "BLOG"
+  ],
+  "author": "Mateusz Blige",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bligem/CMS_node/issues"
+  },
+  "homepage": "https://github.com/bligem/CMS_node#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express.js": "^1.0.0",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2"
+  }
+}
