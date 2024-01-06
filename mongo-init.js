@@ -10,8 +10,8 @@ db.createUser({
   });
   
   db.Users.insertMany([
-    { username: process.env.INIT_ADMIN_NAME, password: process.env.INIT_ADMIN_PASSWD, email: process.env.INIT_ADMIN_MAIL, roles:['Administrator', 'Protected'] },
-    { username: 'user1', password: 'test1 ', email:'', roles:['User'] }
+    { username: process.env.INIT_ADMIN_NAME, password: process.env.INIT_ADMIN_PASSWD, email: process.env.INIT_ADMIN_MAIL, roles:['Administrator', 'Protected'], isLocked: false },
+    { username: 'user1', password: 'test1', email:'test@test.com', roles:['User'], isLocked: false }
   ]);
 
   db.Config.insertMany([

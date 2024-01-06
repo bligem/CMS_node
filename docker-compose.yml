@@ -1,15 +1,19 @@
 version: '1'
 services:
   mongodb:
+    container_name: mongo-container
     image: mongo
     environment:
-      MONGO_INITDB_DATABASE: CMS_DB
+      MONGO_INITDB_DATABASE: ${DB_NAME}
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - "27017:27017"
+    networks:
+      - CMS-network
 
   node-app:
+    container_name: api-container
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,3 +21,9 @@ services:
       - mongodb
     ports:
       - "3000:3000"
+    networks:
+      - CMS-network
+
+networks:
+  CMS-network:
+    driver: bridge
