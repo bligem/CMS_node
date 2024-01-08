@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     minlength: 4,
-    maxlength: 15,
+    maxlength: 15
   },
   password: {
     type: String,
@@ -15,23 +15,23 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator: (value) =>
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,18}$/.test(value),
-      message: 'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+      message: 'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.'
     },
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    match: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+    match: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
   },
   roles: {
     type: [String],
-    default: ['User'],
+    default: ['User']
   },
   isLocked: {
     type: Boolean,
-    default: true,
-  },
+    default: false
+  }
 });
 
 userSchema.pre('save', async function (next) {
