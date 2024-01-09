@@ -1,7 +1,4 @@
-import express from 'express'
 import User from '../dbConfig/userSchema';
-
-const router = express.Router();
 
 async function registerUser(req, res) {
     try {

@@ -112,6 +112,7 @@ db.createUser({
 
   db.Pages.insertMany([
     {
+      _id: "Home",
       pageName: "Home",
       header: "Strona główna",
       description: "Witaj na mojej stronie",
@@ -137,12 +138,14 @@ db.createUser({
       button_2: {name: "Kliknij mnie", link: "#", visibility: "visible"}
     },
     {
+      _id: "Articles",
       pageName: "Wpisy",
       header: "Strona z wpisami",
       description: "Przeglądaj ostatnie wpisy",
       backgroundImage: "Base64"
     },
     {
+      _id: "Contact",
       pageName: "Kontakt",
       header: "Skontaktuj się ze mną",
       description: "Dane kontaktowe",
@@ -157,6 +160,7 @@ db.createUser({
       }
     },
     {
+      _id: "About",
       pageName: "O mnie",
       header: "Kilka słów o mnie",
       description: "Test test test",
