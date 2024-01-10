@@ -28,7 +28,7 @@ async function getArticles(req, res) {
 async function uploadArticle(req, res) {
     try {
         const { title, author, header, backgroundImage, text, allowComments, commentsVisibility } = req.body;
-
+//todo - update article
         const newArticle = new articleModel({
             title,
             author,

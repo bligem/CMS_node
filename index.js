@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/user', userRoutes)
 app.use('/page', pageRoutes)
 
-mongoose.connect(`mongodb+srv://Mt01:ylxVKsen6ShdKoFj@cmsblog.hbipaz5.mongodb.net/CMSBlog?retryWrites=true&w=majority`, {
+mongoose.connect(`${process.env.DB}`, {
 //mongoose.connect(`mongodb://${process.env.DB_USERNAME}${process.env.DB_PASSWORD}@mongodb:27017/${process.env.DB_NAME}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
