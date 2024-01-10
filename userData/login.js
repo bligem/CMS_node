@@ -1,5 +1,4 @@
-import User from "../dbConfig/userSchema";
-import jwt from "jsonwebtoken";
+import User from "../dbConfig/userSchema.js";
 import bcrypt from 'bcrypt';
 
 async function loginUser(req, res) {
@@ -8,12 +7,8 @@ async function loginUser(req, res) {
         const user = await User.findOne({ username });
 
         if (user && (await bcrypt.compare(password, user.password))) {
-            const token = jwt.sign(
-                { userId: user._id, username: user.username },
-                jwtSecretKey,
-                { expiresIn: "1h" }
-            );
-            return res.status(200).json({ token });
+
+            return res.status(200).json(user.roles);
         } else {
             return res.status(401).json({
                 error: "Authentication failed. Invalid username or password.",
@@ -24,4 +19,4 @@ async function loginUser(req, res) {
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
-export default loginUser;
+export default loginUser

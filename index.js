@@ -1,6 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
+import pageRoutes from './routes/pageRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 dotenv.config();
 
@@ -8,9 +10,13 @@ const app = express()
 const port = process.env.PORT
 
 app.use(express.json());
-app.use('/user', userRoutes)
+app.use(express.urlencoded({ extended: true }))
 
-mongoose.connect(`mongodb://${process.env.DB_USERNAME}${process.env.DB_PASSWORD}@mongodb:27017/${process.env.DB_NAME}`, {
+app.use('/user', userRoutes)
+app.use('/page', pageRoutes)
+
+mongoose.connect(`mongodb+srv://Mt01:ylxVKsen6ShdKoFj@cmsblog.hbipaz5.mongodb.net/CMSBlog?retryWrites=true&w=majority`, {
+//mongoose.connect(`mongodb://${process.env.DB_USERNAME}${process.env.DB_PASSWORD}@mongodb:27017/${process.env.DB_NAME}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

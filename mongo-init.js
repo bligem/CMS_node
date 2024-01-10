@@ -15,7 +15,8 @@ db.createUser({
   ]);
 
   db.Config.insertMany([
-    { 
+    {
+      _id: "Global", 
       configType: "Global",
       menu:[
     {
@@ -41,6 +42,7 @@ db.createUser({
     allowLogin: false
   },
   {
+    _id: 'Roles',
     configType: 'Roles',
     roles: [
       {

@@ -1,19 +1,23 @@
-import { articleModel } from "../dbConfig/pageDataSchema";
+import {articleModel} from "../dbConfig/pageDataSchema.js";
 
 async function getArticles(req, res) {
     try {
         const numberOfArticles = parseInt(req.params.number);
-
-        if (!Number.isInteger(numberOfArticles) || numberOfArticles <= 0) {
+        if (isNaN(numberOfArticles)){
+            const articles = await articleModel.find().sort({ date: -1 });
+            return res.status(200).json({ articles });
+        }
+        else if (!Number.isInteger(numberOfArticles) || numberOfArticles <= 0) {
             return res.status(400).json({ error: 'Invalid number provided.' });
         }
-
+        else{
         const articles = await articleModel
             .find()
             .sort({ date: -1 })
             .limit(numberOfArticles);
 
         return res.status(200).json({ articles });
+        }
     }
     catch (error) {
         console.error('Error fetching articles:', error.message);
@@ -28,7 +32,6 @@ async function uploadArticle(req, res) {
         const newArticle = new articleModel({
             title,
             author,
-            date: getCurrentDate(),
             header,
             backgroundImage,
             text,
@@ -42,19 +45,56 @@ async function uploadArticle(req, res) {
         return res.status(201).json({ message: 'Article uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading article:', error.message);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 }
 
-function getCurrentDate() {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString();
+async function deleteArticle(req, res) {
+    try {
+      const articleId = req.params.articleId;
+  
+    //   if (!mongoose.isValidObjectId(articleId)) {
+    //     return res.status(400).json({ error: 'Invalid article ID.' });
+    //   }
+  
+      const deletedArticle = await articleModel.findByIdAndDelete(articleId);
+  
+      if (!deletedArticle) {
+        return res.status(404).json({ error: 'Article not found.' });
+      }
+  
+      return res.status(200).json({ message: 'Article deleted successfully.' });
+    } catch (error) {
+      console.error('Error deleting article:', error.message);
+      return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+  }
+  
 
-    return formattedDate;
+async function uploadComment(req, res) {
+    try {
+        const { articleId, username, text } = req.body;
+        const targetArticle = await articleModel.findById(articleId);
+
+        if (!targetArticle) {
+            return res.status(404).json({ error: 'Article not found.' });
+        }
+
+        targetArticle.comments.push({ username, text });
+
+        await targetArticle.save();
+
+        return res.status(201).json({ message: 'Comment uploaded successfully.' });
+    } catch (error) {
+        console.error('Error uploading comment:', error.message);
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
 }
 
 
 export {
     getArticles,
-    uploadArticle
+    uploadArticle,
+    uploadComment,
+    deleteArticle
 }

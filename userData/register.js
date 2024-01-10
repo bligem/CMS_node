@@ -1,4 +1,4 @@
-import User from '../dbConfig/userSchema';
+import User from '../dbConfig/userSchema.js';
 
 async function registerUser(req, res) {
     try {
@@ -34,4 +34,4 @@ async function registerUser(req, res) {
     }
 }
 
-export default registerUser;
+export default registerUser

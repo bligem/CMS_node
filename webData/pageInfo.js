@@ -1,4 +1,4 @@
-import { pageModel, configModel } from "../dbConfig/pageDataSchema";
+import { pageModel, configModel } from "../dbConfig/pageDataSchema.js";
 
 async function getPage(req, res) {
     try {
@@ -30,5 +30,5 @@ async function uploadPage(req, res) {//todo
 }
 
 export {
-    getPage,
+    getPage
 }

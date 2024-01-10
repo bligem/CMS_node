@@ -1,4 +1,5 @@
 .env should contain:
+
 DB_USERNAME
 DB_PASSWORD
 DB_NAME
@@ -6,3 +7,22 @@ INIT_ADMIN_NAME
 INIT_ADMIN_PASSWD
 INIT_ADMIN_MAIL
 PORT
+
+
+Avaiable requests:
+
+GET requests:
+/page/getArticles/:number? (number - how many articles should be shown, if not present - show all articles)
+
+
+
+POST requests:
+/user/register
+/user/login
+
+/page/uploadArticle - title, author, header, backgroundImage, text, allowComments (bool), commentsVisibility (bool)
+/page/uploadComment - articleId, username, text in body (you can retrieve article first by using /page/getArticles/ to find _id)
+
+DELETE requests:
+
+/page/deleteArticle/:articleId
