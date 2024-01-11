@@ -1,4 +1,5 @@
 import { articleModel } from "../dbConfig/pageDataSchema.js";
+import mongoose from 'mongoose'
 
 async function getArticles(req, res) {
     try {
@@ -27,11 +28,14 @@ async function getArticles(req, res) {
 
 async function getArticleById(req, res) {
     try {
-        const ID = parseInt(req.params.id);
+        var ID = req.params.id;
+        console.log(ID);
         if (!ID) {
             return res.status(400).json({ error: 'Article ID is required.' });
         }
-        const article = await articleModel.findById(ID);
+        const objectId = mongoose.Types.ObjectId.createFromHexString(ID);
+
+        const article = await articleModel.findById(objectId);
         if (!article) {
             return res.status(404).json({ error: 'Article not found.' });
         }

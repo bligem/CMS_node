@@ -6,7 +6,7 @@ const router = express.Router();
 
 //TODO usuwanie artykułów
 router.get('/getArticles/:number?', getArticles)//MANDATORY - bez :number - wyświetla wszystkie
-router.get('getArticleById/:id', getArticleById)
+router.get('/getArticleById/:id', getArticleById)
 router.get('/getPage/:pageName', getPage) //get page with global config
 
 router.delete('/deleteArticle/:articleId', deleteArticle);
