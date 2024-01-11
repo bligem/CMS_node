@@ -1,14 +1,16 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 import pageRoutes from './routes/pageRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import cors from 'cors'
 
 dotenv.config();
 
 const app = express()
 const port = process.env.PORT
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 

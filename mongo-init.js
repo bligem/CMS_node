@@ -35,7 +35,6 @@ db.createUser({
       itemName: 'O mnie',
       visibility: 'visible'
     }],
-    visibilityOptions: ['none','visible'],
     footerLeft: ['Copyright: 2024 CMS Blog', 'Sample text'],
     footerCenter: ['Sample text', 'Sample text2', 'Sample text3'],
     footerRight: ['Sample text'],
