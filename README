@@ -13,7 +13,7 @@ Avaiable requests:
 
 GET requests:
 /page/getArticles/:number? (number - how many articles should be shown, if not present - show all articles)
-
+/page/getArticleById/:id
 
 
 POST requests:
