@@ -56,7 +56,7 @@ async function updatePage(req, res){
         const updatedData = req.body
         const result = await pageModel.updateOne({ pageName }, {$set: updatedData})
         
-        if (result.nModified === 0) {
+        if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Page not found.' });
         }
 
