@@ -8,7 +8,12 @@ async function loginUser(req, res) {
 
         if (user && (await bcrypt.compare(password, user.password))) {
 
-            return res.status(200).json(user);
+            return res.status(200).json({
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                roles: user.roles
+            });
         } else {
             return res.status(401).json({
                 error: "Authentication failed. Invalid username or password.",
