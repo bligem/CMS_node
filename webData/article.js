@@ -113,7 +113,7 @@ async function updateArticle(req, res){
     try {
         const articleId = req.params.articleId
         const updatedData = req.body
-        const result = await pageModel.updateOne({ _id: articleId }, {$set: updatedData})
+        const result = await articleModel.updateOne({ _id: articleId }, {$set: updatedData})
         
         if (result.nModified === 0) {
             return res.status(404).json({ error: 'Article not found.' });
