@@ -1,4 +1,5 @@
 import { configModel } from "../dbConfig/pageDataSchema.js";
+import { ROLES } from "../dbConfig/userSchema.js"
 
 async function getConfig(req, res) {
     try {
@@ -56,8 +57,18 @@ async function updateConfig(req, res){
     }
 }
 
+async function getRoles(req, res) {
+    try {
+      return res.status(200).json({ roles: ROLES });
+    } catch (error) {
+      console.error('Error fetching roles:', error.message);
+      return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+  }
+
 export {
     getConfig,
     uploadConfig,
-    updateConfig
+    updateConfig,
+    getRoles
 }

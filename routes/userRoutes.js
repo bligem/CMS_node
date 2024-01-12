@@ -1,14 +1,29 @@
 import express from 'express'
 import loginUser from '../userData/login.js';
 import registerUser from '../userData/register.js';
+import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser } from '../userData/user.js';
+import { addRole, deleteRole } from '../userData/roles.js';
+import { getRoles } from '../webData/config.js';
 
 const router = express.Router();
 
-// router.get('/hasAdminAccess', userController.getUsersWithAdminAccess);//todo
-// router.get('/findUser/:username', userController.getUser);//todo
+//get
+router.get('/getUser/:name', getUser)
+router.get('/getUserList/:number?', getUserList) //get speciic number of users
+router.get('/getUsersByRole/:roleName', getUsersByRole)
+router.get('/getAllRoles', getRoles)
 
-// router.post('/updateUser/:username', userController.lockUser);//todo
+//post
+router.post('/updateUser/:username', updateUser)
+
+router.post('/addRole/:roleName', addRole)
+router.post('/lockUser/:username', lockUser)
+router.post('/unlockUser/:username', unlockUser)
+
 router.post('/login', loginUser);
 router.post('/register', registerUser);
+
+//delete
+router.delete('/deleteRole/:roleName', deleteRole)
 
 export default router

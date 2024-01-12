@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+const ROLES = ['User', 'Administrator', 'Moderator', 'Autor'];
+
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -25,7 +28,12 @@ const userSchema = new mongoose.Schema({
     match: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
   },
   roles: {
-    type: [String],
+    type: [
+      {
+        type: String,
+        enum: ROLES
+      }
+    ],
     default: ['User']
   },
   isLocked: {
@@ -47,4 +55,8 @@ userSchema.pre('save', async function (next) {
 
 const User = mongoose.model('User', userSchema);
 
-export default User;
+export default User
+
+export {
+  ROLES
+}
