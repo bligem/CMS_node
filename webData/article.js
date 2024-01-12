@@ -111,11 +111,12 @@ async function uploadComment(req, res) {
 
 async function updateArticle(req, res){
     try {
-        const articleId = req.params.articleId
+        const articleId = req.params.id
         const updatedData = req.body
+        console.log(articleId)
         const result = await articleModel.updateOne({ _id: articleId }, {$set: updatedData})
-        
-        if (result.nModified === 0) {
+        console.log(result)
+        if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Article not found.' });
         }
 
