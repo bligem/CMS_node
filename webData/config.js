@@ -46,7 +46,7 @@ async function updateConfig(req, res){
             { $set: updatedData }
         );
 
-        if (result.nModified === 0) {
+        if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Config not found.' });
         }
 
