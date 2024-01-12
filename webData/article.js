@@ -22,7 +22,7 @@ async function getArticles(req, res) {
     }
     catch (error) {
         console.error('Error fetching articles:', error.message);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 }
 
@@ -43,7 +43,7 @@ async function getArticleById(req, res) {
     }
     catch (error) {
         console.error('Error fetching articles:', error.message);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 }
 
@@ -51,6 +51,7 @@ async function uploadArticle(req, res) {
     try {
         const { title, author, header, backgroundImage, text, allowComments, commentsVisibility } = req.body;
         //todo - update article
+        console.log(req.body);
         const newArticle = new articleModel({
             title,
             author,
@@ -73,7 +74,7 @@ async function uploadArticle(req, res) {
 
 async function deleteArticle(req, res) {
     try {
-        const articleId = req.params.articleId;
+        const articleId = req.params.id;
         const deletedArticle = await articleModel.findByIdAndDelete(articleId);
 
         if (!deletedArticle) {
@@ -108,11 +109,51 @@ async function uploadComment(req, res) {
     }
 }
 
+async function updateArticle(req, res){
+    try {
+        const articleId = req.params.articleId
+        const updatedData = req.body
+        const result = await pageModel.updateOne({ _id: articleId }, {$set: updatedData})
+        
+        if (result.nModified === 0) {
+            return res.status(404).json({ error: 'Article not found.' });
+        }
+
+        return res.status(200).json({ message: `Article updated successfully.` });
+    } catch (error) {
+        console.error('Error updating article:', error.message);
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+}
+
+async function deleteComment(req, res) {
+    try {
+        const articleId = req.params.articleId
+        const commentId = req.params.commentId
+        const updatedArticle = await articleModel.findOneAndUpdate(
+          { _id: articleId },
+          { $pull: { comments: { _id: commentId } } },
+          { new: true }
+        );
+    
+        if (!updatedArticle) {
+            return res.status(404).json({ error: 'Article or comment not found.' });
+        }
+    
+        return res.status(200).json({ message: 'Comment deleted successfully.' });
+      } catch (error) {
+        console.error('Error deleting comment:', error.message);
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+      }
+}
+
 
 export {
     getArticles,
     uploadArticle,
     uploadComment,
     deleteArticle,
-    getArticleById
+    getArticleById,
+    updateArticle,
+    deleteComment
 }

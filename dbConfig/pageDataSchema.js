@@ -59,9 +59,33 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
+const pageSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: String,
+      required: true
+    },
+    pageName: {
+      type: String,
+      required: true
+    },
+    header: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+  },
+  {
+    strict: false
+  }
+)
+
 //TODO new model for every page to make it better
 mongoose.set('strictQuery', false);
-const pageModel = mongoose.model('pageModel', schema, 'Pages');
+const pageModel = mongoose.model('pageModel', pageSchema, 'Pages');
 const articleModel = mongoose.model('articleModel', articleSchema, 'Articles');
 const configModel = mongoose.model('configModel', schema, 'Config')
 

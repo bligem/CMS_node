@@ -16,7 +16,7 @@ async function loginUser(req, res) {
         }
     } catch (error) {
         console.error("Error during login:", error.message);
-        return res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 }
 export default loginUser
