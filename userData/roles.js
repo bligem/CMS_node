@@ -10,6 +10,11 @@ async function addRole(req, res) {
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
         }
+
+        if (user.roles.includes('Protected')) {
+            return res.status(403).json({ error: 'User is protected. Roles cannot be changed.' });
+        }
+
         if (!user.roles.includes(roleName)) {
             user.roles.push(roleName);
             await user.save({ validateBeforeSave: false });
@@ -32,6 +37,10 @@ async function deleteRole(req, res) {
 
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
+        }
+
+        if (user.roles.includes('Protected')) {
+            return res.status(403).json({ error: 'User is protected. Roles cannot be changed.' });
         }
 
         const roleIndex = user.roles.indexOf(roleName);

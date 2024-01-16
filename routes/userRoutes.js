@@ -1,7 +1,7 @@
 import express from 'express'
 import loginUser from '../userData/login.js';
 import registerUser from '../userData/register.js';
-import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser } from '../userData/user.js';
+import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser, deleteUser } from '../userData/user.js';
 import { addRole, deleteRole } from '../userData/roles.js';
 import { getRoles } from '../webData/config.js';
 
@@ -25,5 +25,6 @@ router.post('/register', registerUser);
 
 //delete
 router.delete('/deleteRole/:roleName', deleteRole)
+router.delete('/deleteUser', deleteUser)
 
 export default router

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const ROLES = ['User', 'Administrator', 'Moderator', 'Autor'];
+const ROLES = ['User', 'Administrator', 'Moderator', 'Autor', 'Protected'];
 
 
 const userSchema = new mongoose.Schema({

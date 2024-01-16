@@ -4,17 +4,17 @@ async function getPage(req, res) {
     try {
         const name = req.params.pageName;
 
-        const pageData = await pageModel.findOne({_id: name});
-        if (!pageData){
+        const pageData = await pageModel.findOne({ _id: name });
+        if (!pageData) {
             return res.status(404).json({ error: 'Page not found.' });
-          }
-        const configData = await configModel.findOne({configType: "Global"})
+        }
+        const configData = await configModel.findOne({ configType: "Global" })
 
         const combinedDoc = {
             page: pageData,
             config: configData,
-          };
-          
+        };
+
         return res.status(200).json(combinedDoc);
     }
     catch (error) {
@@ -23,14 +23,14 @@ async function getPage(req, res) {
     }
 }
 
-async function uploadPage(req, res) {//todo
+async function uploadPage(req, res) {
     try {
-        const {pageName, header, description, ...params} = req.body
+        const { pageName, header, description, ...params } = req.body
         const _id = pageName;
 
-        const check = await pageModel.findOne({_id: _id})
+        const check = await pageModel.findOne({ _id: _id })
 
-        if (check){
+        if (check) {
             return res.status(400).json({ error: 'Page name already exists. Please choose another page name.' });
         }
 
@@ -43,6 +43,16 @@ async function uploadPage(req, res) {//todo
         });
         await pageData.save()
 
+        const globalDocument = await pageModel.findOne({ configType: "Global" });
+
+        if (globalDocument) {
+            globalDocument.menu.push({
+                itemName: pageName,
+                visibility: 'none',
+            });
+            await globalDocument.save();
+        }
+
         return res.status(201).json({ message: 'Page uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading page:', error.message);
@@ -50,12 +60,12 @@ async function uploadPage(req, res) {//todo
     }
 }
 
-async function updatePage(req, res){
+async function updatePage(req, res) {
     try {
         const pageName = req.params.pageName
         const updatedData = req.body
-        const result = await pageModel.updateOne({ pageName }, {$set: updatedData})
-        
+        const result = await pageModel.updateOne({ pageName }, { $set: updatedData })
+
         if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Page not found.' });
         }
@@ -67,10 +77,10 @@ async function updatePage(req, res){
     }
 }
 
-async function deletePage(req, res){
+async function deletePage(req, res) {
     try {
         const name = req.params.pageName;
-        const deletedPage = await pageModel.deleteOne({pageName:name})
+        const deletedPage = await pageModel.deleteOne({ pageName: name })
 
         if (!deletedPage) {
             return res.status(404).json({ error: 'Page not found.' });

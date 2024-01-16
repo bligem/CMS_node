@@ -1,5 +1,4 @@
 import User from "../dbConfig/userSchema.js";
-import bcrypt from 'bcrypt';
 
 async function getUser(req, res) {
   try {
@@ -70,9 +69,7 @@ async function updateUser(req, res) {
     }
 
     if (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      user.password = hashedPassword;
+      user.password = password;
     }
 
     if (email) {
@@ -135,11 +132,37 @@ async function unlockUser(req, res) {
   }
 }
 
+async function deleteUser(req, res) {
+  try {
+    const { username } = req.body;
+
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    if (user.roles.includes('Protected')) {
+      return res.status(403).json({ error: 'User is protected. Cannot delete this user.' });
+    }
+
+    await user.remove();
+
+    return res.status(200).json({ message: 'User deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting user:', error.message);
+    return res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  }
+}
+
+
+
 export {
   getUser,
   getUserList,
   getUsersByRole,
   updateUser,
   lockUser,
-  unlockUser
+  unlockUser,
+  deleteUser
 }
