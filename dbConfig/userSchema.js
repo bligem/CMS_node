@@ -39,7 +39,15 @@ const userSchema = new mongoose.Schema({
   isLocked: {
     type: Boolean,
     default: false
-  }
+  },
+  lastFailedLoginAttempt: {
+    type: Date,
+    default: null
+  },
+  failedLoginAttempts: {
+    type: Number,
+    default: 0
+  }  
 });
 
 userSchema.pre('save', async function (next) {
