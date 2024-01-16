@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/getArticles/:number?', getArticles)
 router.get('/getArticleById/:id', getArticleById)
 router.get('/getPage/:pageName', getPage) //get page with global config
-router.get('/getConfig', getConfig)
+router.get('/getConfig/:configId', getConfig)
 
 //post
 router.post('/uploadPage', uploadPage)
