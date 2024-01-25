@@ -23,6 +23,21 @@ async function getPage(req, res) {
     }
 }
 
+async function getPages(req, res) {
+    try {
+        const pageData = await pageModel.find();
+        console.log(pageData)
+        if (!pageData) {
+            return res.status(404).json({ error: 'Page not found.' });
+        }
+        return res.status(200).json(pageData);
+    }
+    catch (error) {
+        console.error('Error fetching pages:', error.message);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 async function uploadPage(req, res) {
     try {
         const { pageName, header, description, ...params } = req.body
@@ -96,6 +111,7 @@ async function deletePage(req, res) {
 
 export {
     getPage,
+    getPages,
     uploadPage,
     updatePage,
     deletePage

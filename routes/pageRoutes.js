@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPage, uploadPage, updatePage, deletePage } from '../WebController/pageInfo.js';
+import { getPage, uploadPage, updatePage, deletePage, getPages } from '../WebController/pageInfo.js';
 import { getArticles, getArticleById, uploadArticle, deleteArticle, uploadComment, updateArticle, deleteComment } from '../WebController/article.js'
 import { getConfig, updateConfig, uploadConfig } from '../WebController/config.js';
 
@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/getArticles/:number?', getArticles)
 router.get('/getArticleById/:id', getArticleById)
 router.get('/getPage/:pageName', getPage) //get page with global config
+router.get('/getPages', getPages)
 router.get('/getConfig/:configId', getConfig)
 
 //post

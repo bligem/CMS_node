@@ -4,12 +4,13 @@ import mongoose from 'mongoose'
 async function getArticles(req, res) {
     try {
         const numberOfArticles = parseInt(req.params.number);
-        if (isNaN(numberOfArticles)) {
+        
+        if (!Number.isInteger(numberOfArticles) || numberOfArticles <= 0) {
+            return res.status(400).json({ error: 'Invalid number provided.' });
+        }
+        else if (isNaN(numberOfArticles)) {
             const articles = await articleModel.find().sort({ date: -1 });
             return res.status(200).json({ articles });
-        }
-        else if (!Number.isInteger(numberOfArticles) || numberOfArticles <= 0) {
-            return res.status(400).json({ error: 'Invalid number provided.' });
         }
         else {
             const articles = await articleModel

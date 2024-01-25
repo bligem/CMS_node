@@ -6,6 +6,7 @@ const name = "TestUser1909"
 const password = "SafePassword1909#"
 const email = "TestEmail@email.com"
 const configType = "Global"
+const pageName = "Home"
 
 describe("CMS API user requests", () => {
 
@@ -108,5 +109,43 @@ describe("CMS API page requests", () => {
     expect(response.type).toBe("application/json");
   });
 
+  test("[/page/getPage/:pageName] Check getPage endpoint with correct data", async () => {
+    const response = await request(app).get(
+      `/page/getPage/${pageName}`
+    );
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toBe("application/json");
+  });
+  test("[/page/getPage/:pageName] Check getPages endpoint", async () => {
+    const response = await request(app).get(
+      `/page/getPages`
+    );
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toBe("application/json");
+  });
+
+  test("[/page/getPage/:pageName] Check getPage endpoint with incorrect data", async () => {
+    const response = await request(app).get(
+      `/page/getPage/ersafs`
+    );
+    expect(response.statusCode).toBe(404);
+    expect(response.type).toBe("application/json");
+  });
+
+  test("[/page/getArticles/:number?] Check getArticles endpoint with correct data", async () => {
+    const response = await request(app).get(
+      `/page/getArticles/1`
+    );
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toBe("application/json");
+  });
+
+  test("[/page/getArticles/:number?] Check getArticles endpoint with incorrect data", async () => {
+    const response = await request(app).get(
+      `/page/getArticles/asd`
+    );
+    expect(response.statusCode).toBe(400);
+    expect(response.type).toBe("application/json");
+  });
   
 });
