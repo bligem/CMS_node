@@ -2,9 +2,10 @@ import request from "supertest";
 import app from "../server.js";
 import * as dotenv from "dotenv";
 
-var name = "TestUser1909"
-var password = "SafePassword1909#"
-var email = "TestEmail@email.com"
+const name = "TestUser1909"
+const password = "SafePassword1909#"
+const email = "TestEmail@email.com"
+const configType = "Global"
 
 describe("CMS API user requests", () => {
 
@@ -89,3 +90,23 @@ describe("CMS API user requests", () => {
     });
 
   });
+
+describe("CMS API page requests", () => {
+  test("[/page/getConfig/:configId] Check getConfig endpoint with correct data", async () => {
+    const response = await request(app).get(
+      `/page/getConfig/${configType}`
+    );
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toBe("application/json");
+  });
+
+  test("[/page/getConfig/:configId] Check getConfig endpoint with incorrect data", async () => {
+    const response = await request(app).get(
+      `/page/getConfig/asdsa`
+    );
+    expect(response.statusCode).toBe(404);
+    expect(response.type).toBe("application/json");
+  });
+
+  
+});

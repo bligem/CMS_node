@@ -8,7 +8,7 @@ async function loginUser(req, res) {
         if (user) {
             if (user.isLocked) {
                 return res.status(401).json({
-                    error: "Authentication failed. Invalid username or password.1",
+                    error: "Authentication failed. Invalid username or password.",
                 });
             }
             
@@ -34,12 +34,12 @@ async function loginUser(req, res) {
                 
                 await user.save();
                 return res.status(401).json({
-                    error: "Authentication failed. Invalid username or password.2",
+                    error: "Authentication failed. Invalid username or password.",
                 });
             }
         } else {
             return res.status(401).json({
-                error: "Authentication failed. Invalid username or password.3",
+                error: "Authentication failed. Invalid username or password.",
             });
         }
     } catch (error) {

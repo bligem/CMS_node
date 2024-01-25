@@ -3,8 +3,9 @@ import { ROLES } from "../dbConfig/userSchema.js"
 
 async function getConfig(req, res) {
     try {
-        const ID = req.param.configId;
-        const configData = await configModel.findOne({ configType: ID })
+        const configType = req.params.configId;
+        const configData = await configModel.findOne({'configType': configType})
+        console.log(configType)
         if (!configData) {
             return res.status(404).json({ error: 'Config not found.' });
         }
