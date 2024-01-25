@@ -1,7 +1,7 @@
 import express from 'express'
-import { getPage, uploadPage, updatePage, deletePage } from '../webData/pageInfo.js';
-import { getArticles, getArticleById, uploadArticle, deleteArticle, uploadComment, updateArticle, deleteComment } from '../webData/article.js'
-import { getConfig, updateConfig, uploadConfig } from '../webData/config.js';
+import { getPage, uploadPage, updatePage, deletePage } from '../WebController/pageInfo.js';
+import { getArticles, getArticleById, uploadArticle, deleteArticle, uploadComment, updateArticle, deleteComment } from '../WebController/article.js'
+import { getConfig, updateConfig, uploadConfig } from '../WebController/config.js';
 
 const router = express.Router();
 

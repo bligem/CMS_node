@@ -1,9 +1,9 @@
 import express from 'express'
-import loginUser from '../userData/login.js';
-import registerUser from '../userData/register.js';
-import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser, deleteUser } from '../userData/user.js';
-import { addRole, deleteRole } from '../userData/roles.js';
-import { getRoles } from '../webData/config.js';
+import loginUser from '../UserController/login.js';
+import registerUser from '../UserController/register.js';
+import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser, deleteUser } from '../UserController/user.js';
+import { addRole, deleteRole } from '../UserController/roles.js';
+import { getRoles } from '../WebController/config.js';
 
 const router = express.Router();
 

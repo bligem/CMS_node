@@ -16,6 +16,7 @@ async function loginUser(req, res) {
 
             if (isCorrectPassword) {
                 user.failedLoginAttempts = 0;
+                user.password = password;
                 await user.save();
 
                 return res.status(200).json({

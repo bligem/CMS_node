@@ -136,15 +136,17 @@ async function deleteUser(req, res) {
   try {
     const { username } = req.body;
 
-    const user = await User.findOne({ username });
+    const userData = await User.findOne({ username });
 
-    if (!user) {
+    if (!userData) {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    if (user.roles.includes('Protected')) {
+    if (userData.roles.includes('Protected')) {
       return res.status(403).json({ error: 'User is protected. Cannot delete this user.' });
     }
+
+    const user = new User(userData)
 
     await user.remove();
 
