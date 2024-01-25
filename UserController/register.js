@@ -1,11 +1,17 @@
 import User from '../dbConfig/userSchema.js';
+import bcrypt from 'bcrypt';
 
 async function registerUser(req, res) {
     try {
         const { username, password, email } = req.body;
+        const passwordRegex = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,18}$/;
         if (!username || !password || !email) {
             return res.status(400).json({ error: 'Username, password, and email are required.' });
         }
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({ error: 'Password must meet the specified criteria.' });
+          }
 
         const existingUser = await User.findOne({
             $or: [{ username }, { email }],
@@ -18,10 +24,12 @@ async function registerUser(req, res) {
                 return res.status(400).json({ error: 'Email address is already in use. Please use a different email.' });
             }
         }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
             username,
-            password,
+            password: hashedPassword,
             email,
         });
 

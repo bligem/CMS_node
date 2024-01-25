@@ -24,9 +24,41 @@ describe("CMS API user requests", () => {
       expect(response.type).toBe("application/json");
     });
 
+    test("[/user/getUserList/] Check endpoint with empty data", async () => {
+      const response = await request(app).get(
+        `/user/getUserList/`
+      );
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toBe("application/json");
+    });
     test("[/user/getUserList/] Check endpoint with correct data", async () => {
       const response = await request(app).get(
         `/user/getUserList/1`
+      );
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toBe("application/json");
+    });
+
+    
+    test("[/user/lockUser/:username] Check if locking user works", async () => {
+      const response = await request(app).post(
+        `/user/lockUser/${name}`
+      );
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toBe("application/json");
+    });
+
+    test("[/user/login/] Check if blocked user can log in", async () => {
+      const response = await request(app).post(
+        `/user/login/`
+      ).send({username: name, password: password});
+      expect(response.statusCode).toBe(401);
+      expect(response.type).toBe("application/json");
+    });
+
+    test("[/user/unlockUser/:username] Check if unlocking user works", async () => {
+      const response = await request(app).post(
+        `/user/unlockUser/${name}`
       );
       expect(response.statusCode).toBe(200);
       expect(response.type).toBe("application/json");
@@ -36,6 +68,14 @@ describe("CMS API user requests", () => {
       const response = await request(app).post(
         `/user/login/`
       ).send({username: name, password: password});
+      expect(response.statusCode).toBe(200);
+      expect(response.type).toBe("application/json");
+    });
+
+    test("[/user/getAllRoles] Check all roles", async () => {
+      const response = await request(app).get(
+        `/user/getAllRoles`
+      );
       expect(response.statusCode).toBe(200);
       expect(response.type).toBe("application/json");
     });

@@ -5,18 +5,17 @@ async function loginUser(req, res) {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
-        console.log(await bcrypt.compare(password, user.password));
         if (user) {
             if (user.isLocked) {
                 return res.status(401).json({
-                    error: "Authentication failed. Invalid username or password.",
+                    error: "Authentication failed. Invalid username or password.1",
                 });
             }
+            
             const isCorrectPassword = await bcrypt.compare(password, user.password);
-
+            console.log(isCorrectPassword)
             if (isCorrectPassword) {
                 user.failedLoginAttempts = 0;
-                user.password = password;
                 await user.save();
 
                 return res.status(200).json({
@@ -35,12 +34,12 @@ async function loginUser(req, res) {
                 
                 await user.save();
                 return res.status(401).json({
-                    error: "Authentication failed. Invalid username or password.",
+                    error: "Authentication failed. Invalid username or password.2",
                 });
             }
         } else {
             return res.status(401).json({
-                error: "Authentication failed. Invalid username or password.",
+                error: "Authentication failed. Invalid username or password.3",
             });
         }
     } catch (error) {

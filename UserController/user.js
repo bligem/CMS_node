@@ -19,19 +19,19 @@ async function getUser(req, res) {
 
 async function getUserList(req, res) {
   try {
-    let limit = req.params.number ? parseInt(req.params.number) : 0;
+    let limit = req.params.number ? parseInt(req.params.number) : 0
     const number = parseInt(req.params.number)
 
-    if (limit <= 0) {
+    if (limit < 0) {
       return res.status(400).json({ error: 'Invalid number provided.' });
     }
 
-    if (isNaN(limit)) {
+    if (limit == 0) {
       const allUsers = await User.find();
       return res.status(200).json(allUsers);
     }
 
-    const userList = await UserModel.find().limit(number);
+    const userList = await User.find().limit(number);
     return res.status(200).json(userList);
   } catch (error) {
     console.error('Error fetching user list:', error.message);
@@ -93,7 +93,6 @@ async function lockUser(req, res) {
   try {
     const { username } = req.params;
 
-    // Find the user by username
     const user = await User.findOne({ username });
 
     if (!user) {
@@ -114,14 +113,12 @@ async function unlockUser(req, res) {
   try {
     const { username } = req.params;
 
-    // Find the user by username
     const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    // Unlock the user account
     user.isLocked = false;
     await user.save();
 
@@ -146,9 +143,7 @@ async function deleteUser(req, res) {
       return res.status(403).json({ error: 'User is protected. Cannot delete this user.' });
     }
 
-    const user = new User(userData)
-
-    await user.remove();
+    const deleteUser = await User.deleteOne({ username })
 
     return res.status(200).json({ message: 'User deleted successfully.' });
   } catch (error) {
