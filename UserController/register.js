@@ -1,5 +1,6 @@
 import User from '../dbConfig/userSchema.js';
 import bcrypt from 'bcrypt';
+import logger from '../dbConfig/loggerConfig.js'
 
 async function registerUser(req, res) {
     try {
@@ -34,7 +35,7 @@ async function registerUser(req, res) {
         });
 
         await newUser.save();
-
+        logger.info(`New user has been registered. ${username}`, req)
         return res.status(201).json({ message: 'User registered successfully.' });
     } catch (error) {
         console.error('Error registering user:', error.message);

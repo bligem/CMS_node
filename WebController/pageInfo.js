@@ -1,4 +1,5 @@
 import { pageModel, configModel } from "../dbConfig/pageDataSchema.js";
+import logger from '../dbConfig/loggerConfig.js'
 
 async function getPage(req, res) {
     try {
@@ -68,6 +69,8 @@ async function uploadPage(req, res) {
             await globalDocument.save();
         }
 
+        logger.info(`New page ${pageName} has been uploaded`, req)
+
         return res.status(201).json({ message: 'Page uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading page:', error.message);
@@ -85,6 +88,7 @@ async function updatePage(req, res) {
             return res.status(404).json({ error: 'Page not found.' });
         }
 
+        logger.info(`Page ${pageName} has been updated`, req)
         return res.status(200).json({ message: `Page ${pageName} updated successfully.` });
     } catch (error) {
         console.error('Error updating page:', error.message);
@@ -101,6 +105,7 @@ async function deletePage(req, res) {
             return res.status(404).json({ error: 'Page not found.' });
         }
 
+        logger.info(`Page ${name} has been deleted`, req)
         return res.status(200).json({ message: 'Page deleted successfully.' });
     } catch (error) {
         console.error('Error deleting page:', error.message);

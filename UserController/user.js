@@ -1,4 +1,5 @@
 import User from "../dbConfig/userSchema.js";
+import logger from '../dbConfig/loggerConfig.js'
 
 async function getUser(req, res) {
   try {
@@ -82,6 +83,8 @@ async function updateUser(req, res) {
 
     await user.save();
 
+    logger.info(`User ${username} has been updated`, req)
+
     return res.status(200).json({ message: 'User updated successfully.' });
   } catch (error) {
     console.error('Error updating user:', error.message);
@@ -102,6 +105,7 @@ async function lockUser(req, res) {
     user.isLocked = true;
     await user.save();
 
+    logger.info(`User ${username} has been locked`, req)
     return res.status(200).json({ message: 'User account locked successfully.' });
   } catch (error) {
     console.error('Error locking user account:', error.message);
@@ -122,6 +126,7 @@ async function unlockUser(req, res) {
     user.isLocked = false;
     await user.save();
 
+    logger.info(`User ${username} has been unlocked`, req)
     return res.status(200).json({ message: 'User account unlocked successfully.' });
   } catch (error) {
     console.error('Error unlocking user account:', error.message);
@@ -145,6 +150,7 @@ async function deleteUser(req, res) {
 
     const deleteUser = await User.deleteOne({ username })
 
+    logger.info(`User ${username} has been deleted`, req)
     return res.status(200).json({ message: 'User deleted successfully.' });
   } catch (error) {
     console.error('Error deleting user:', error.message);

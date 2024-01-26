@@ -1,7 +1,9 @@
 import User from "../dbConfig/userSchema.js";
 import bcrypt from 'bcrypt';
+import logger from '../dbConfig/loggerConfig.js'
 
 async function loginUser(req, res) {
+    
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
@@ -18,6 +20,8 @@ async function loginUser(req, res) {
                 user.failedLoginAttempts = 0;
                 await user.save();
 
+                logger.info(`User ${username} has logged in`, req)
+
                 return res.status(200).json({
                     id: user._id,
                     username: user.username,
@@ -33,6 +37,9 @@ async function loginUser(req, res) {
                 }
                 
                 await user.save();
+
+                logger.error(`Invalid login attempt by user ${username}`, req)
+
                 return res.status(401).json({
                     error: "Authentication failed. Invalid username or password.",
                 });

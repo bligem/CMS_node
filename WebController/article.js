@@ -1,4 +1,5 @@
 import { articleModel } from "../dbConfig/pageDataSchema.js";
+import logger from '../dbConfig/loggerConfig.js'
 import mongoose from 'mongoose'
 
 async function getArticles(req, res) {
@@ -66,6 +67,7 @@ async function uploadArticle(req, res) {
 
         await newArticle.save();
 
+        logger.info(`New article ${title} has been uploaded`, req)
         return res.status(201).json({ message: 'Article uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading article:', error.message);
@@ -82,6 +84,7 @@ async function deleteArticle(req, res) {
             return res.status(404).json({ error: 'Article not found.' });
         }
 
+        logger.info(`Article with id ${articleId} has been deleted`, req)
         return res.status(200).json({ message: 'Article deleted successfully.' });
     } catch (error) {
         console.error('Error deleting article:', error.message);
@@ -103,6 +106,7 @@ async function uploadComment(req, res) {
 
         await targetArticle.save();
 
+        logger.info(`ArticleID: ${articleId} New comment from user ${username}`, req)
         return res.status(201).json({ message: 'Comment uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading comment:', error.message);
@@ -120,7 +124,7 @@ async function updateArticle(req, res){
         if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Article not found.' });
         }
-
+        logger.info(`New article with id ${articleId} has been uploaded`, req)
         return res.status(200).json({ message: `Article updated successfully.` });
     } catch (error) {
         console.error('Error updating article:', error.message);
@@ -141,7 +145,7 @@ async function deleteComment(req, res) {
         if (!updatedArticle) {
             return res.status(404).json({ error: 'Article or comment not found.' });
         }
-    
+        logger.info(`ArticleID: ${articleId} Comment ${commentId} has been deleted`, req)
         return res.status(200).json({ message: 'Comment deleted successfully.' });
       } catch (error) {
         console.error('Error deleting comment:', error.message);

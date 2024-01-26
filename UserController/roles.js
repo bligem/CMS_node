@@ -1,4 +1,5 @@
 import User from "../dbConfig/userSchema.js";
+import logger from '../dbConfig/loggerConfig.js'
 
 async function addRole(req, res) {
     try {
@@ -18,6 +19,9 @@ async function addRole(req, res) {
         if (!user.roles.includes(roleName)) {
             user.roles.push(roleName);
             await user.save({ validateBeforeSave: false });
+
+            logger.info(`New role ${roleName} has been added for user ${username}`, req)
+
             return res.status(200).json({ message: 'Role added successfully.' });
         } else {
             return res.status(400).json({ error: 'User already has the specified role.' });
@@ -47,6 +51,9 @@ async function deleteRole(req, res) {
         if (roleIndex !== -1) {
             user.roles.splice(roleIndex, 1);
             await user.save({ validateBeforeSave: false });
+
+            logger.info(`Role ${roleName} has been deleted from user ${username}`, req)
+
             return res.status(200).json({ message: 'Role deleted successfully.' });
         } else {
             return res.status(400).json({ error: 'User does not have the specified role.' });

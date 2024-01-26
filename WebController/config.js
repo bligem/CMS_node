@@ -1,5 +1,6 @@
 import { configModel } from "../dbConfig/pageDataSchema.js";
 import { ROLES } from "../dbConfig/userSchema.js"
+import logger from '../dbConfig/loggerConfig.js'
 
 async function getConfig(req, res) {
     try {
@@ -31,6 +32,7 @@ async function uploadConfig(req, res){
         })
 
         await configData.save()
+        logger.info(`new config ${configType} has been uploaded`, req)
         return res.status(201).json({ message: 'Config uploaded successfully.' });
     } catch (error) {
         console.error('Error uploading config:', error.message);
@@ -51,6 +53,7 @@ async function updateConfig(req, res){
             return res.status(404).json({ error: 'Config not found.' });
         }
 
+        logger.info(`Config ${configType} has been updated`, req)
         return res.status(200).json({ message: `Config ${configType} updated successfully.` });
     } catch (error) {
         console.error('Error uploading config:', error.message);

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --verbose --runInBand --detectOpenHandles",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --verbose --runInBand --detectOpenHandles --silent",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -32,7 +32,9 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "winston": "^3.11.0",
+    "winston-mongodb": "^5.1.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0"

@@ -31,7 +31,7 @@ describe("DB connection", () => {
     await testCollection.insertOne(testData);
 
     const insertedData = await testCollection.findOne({username: name})
-    
+
     expect(insertedData).toEqual(testData);
 
     await db.collection(testCollectionName).drop();
