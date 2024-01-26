@@ -17,13 +17,19 @@ app.use('/user', userRoutes)
 app.use('/page', pageRoutes)
 
 mongoose.connect(`${process.env.DB}`, {
-//mongoose.connect(`mongodb://${process.env.DB_USERNAME}${process.env.DB_PASSWORD}@mongodb:27017/${process.env.DB_NAME}`, {
+})
+  .then(() => {
+    console.log('Connected to MongoDB');
   })
-    .then(() => {
-      console.log('Connected to MongoDB');
-    })
-    .catch((error) => {
-      console.error('Error connecting to MongoDB:', error.message);
-    });
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
+  });
+
+app.get("/test", (req, res) => {
+  res.status(200).send({ message: "Hello World!" });
+  logger.info(
+    `Test request | [URL ${req.originalUrl}] [METHOD: ${req.method}] [IP ${req.ip}]`
+  );
+});
 
 export default app

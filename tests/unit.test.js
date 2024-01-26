@@ -10,6 +10,14 @@ const pageName = "Home"
 
 describe("CMS API user requests", () => {
 
+  test("[/user/register] Register user with incorrect data", async () => {
+    const response = await request(app).post(
+      `/user/register/`
+    ).send({username: "name", password: "password", email: "email"});
+    expect(response.statusCode).toBe(400);
+    expect(response.type).toBe("application/json");
+  });
+
   test("[/user/register] Register user", async () => {
     const response = await request(app).post(
       `/user/register/`
@@ -41,6 +49,13 @@ describe("CMS API user requests", () => {
       expect(response.type).toBe("application/json");
     });
 
+    test("[/user/login/] Check login endpoint with incorrect data", async () => {
+      const response = await request(app).post(
+        `/user/login/`
+      ).send({username: "name", password: "password"});
+      expect(response.statusCode).toBe(401);
+      expect(response.type).toBe("application/json");
+    });
     
     test("[/user/lockUser/:username] Check if locking user works", async () => {
       const response = await request(app).post(
