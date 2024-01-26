@@ -35,9 +35,6 @@ class Logger {
 
         this.logger = winston.createLogger(logConfiguration);
     }
-    setSilent(silent) {
-        this.silent = silent;
-    }
     _getRequestInfo(req) {
         return {
             url: req.originalUrl,
