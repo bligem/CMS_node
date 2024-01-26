@@ -1,6 +1,5 @@
 import request from "supertest";
 import app from "../server.js";
-import * as dotenv from "dotenv";
 
 const name = "TestUser1909"
 const password = "SafePassword1909#"
