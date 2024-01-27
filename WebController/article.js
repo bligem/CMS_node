@@ -6,7 +6,7 @@ async function getArticles(req, res) {
     try {
         const numberOfArticles = parseInt(req.params.number);
         
-        if (!Number.isInteger(numberOfArticles) || numberOfArticles <= 0) {
+        if (numberOfArticles <= 0) {
             return res.status(400).json({ error: 'Invalid number provided.' });
         }
         else if (isNaN(numberOfArticles)) {
