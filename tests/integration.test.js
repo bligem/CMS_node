@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../server.js";
+import app from "../index.js";
 import { MongoClient } from "mongodb";
 import dotenv from 'dotenv'
 dotenv.config();

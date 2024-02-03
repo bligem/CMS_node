@@ -1,30 +1,28 @@
 import express from 'express'
-import loginUser from '../UserController/login.js';
-import registerUser from '../UserController/register.js';
-import { getUser, getUserList, getUsersByRole, updateUser, lockUser, unlockUser, deleteUser } from '../UserController/user.js';
-import { addRole, deleteRole } from '../UserController/roles.js';
-import { getRoles } from '../WebController/config.js';
+import User from '../UserController/user.js';
+import Role from '../UserController/roles.js';
+import Config from '../WebController/config.js';
 
 const router = express.Router();
 
 //get
-router.get('/getUser/:name', getUser)
-router.get('/getUserList/:number?', getUserList) //get speciic number of users
-router.get('/getUsersByRole/:roleName', getUsersByRole)
-router.get('/getAllRoles', getRoles)
+router.get('/getUser/:name', User.getUser)
+router.get('/getUserList/:number?', User.getUserList) //get speciic number of users
+router.get('/getUsersByRole/:roleName', User.getUsersByRole)
+router.get('/getAllRoles', Config.getRoles)
 
 //post
-router.post('/updateUser/:username', updateUser)
+router.post('/updateUser/:username', User.updateUser)
 
-router.post('/addRole/:roleName', addRole)
-router.post('/lockUser/:username', lockUser)
-router.post('/unlockUser/:username', unlockUser)
+router.post('/addRole/:roleName', Role.addRole)
+router.post('/lockUser/:username', User.lockUser)
+router.post('/unlockUser/:username', User.unlockUser)
 
-router.post('/login', loginUser);
-router.post('/register', registerUser);
+router.post('/login', User.loginUser);
+router.post('/register', User.registerUser);
 
 //delete
-router.delete('/deleteRole/:roleName', deleteRole)
-router.delete('/deleteUser', deleteUser)
+router.delete('/deleteRole/:roleName', Role.deleteRole)
+router.delete('/deleteUser', User.deleteUser)
 
 export default router

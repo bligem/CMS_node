@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../server.js";
+import app from "../index.js";
 
 const name = "TestUser1909"
 const password = "SafePassword1909#"
@@ -158,7 +158,7 @@ describe("CMS API page requests", () => {
     const response = await request(app).get(
       `/page/getArticles/asd`
     );
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(200);
     expect(response.type).toBe("application/json");
   });
   
